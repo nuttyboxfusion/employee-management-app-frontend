@@ -1,0 +1,52 @@
+.card {
+  width: 100%;
+  max-width: 800px; /* Adjust maximum width as needed */
+  margin: 10px auto; /* Center the card horizontally with vertical margin */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.cardContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px; /* Add padding inside the card */
+}
+
+.employeeDetails {
+  display: flex;
+  flex: 1; /* Take up remaining space */
+  font-size: medium;
+}
+
+.employeeDetail {
+  flex: 1; /* Distribute space evenly */
+  margin-right: 16px; /* Space between each detail block */
+}
+
+.employeeDetails p {
+  margin: 0; /* Remove margin to prevent unwanted spacing */
+  white-space: nowrap; /* Prevent line breaks */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Show ellipsis for overflow text */
+}
+
+.count {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1890ff; /* Adjust color as needed */
+  margin-right: 16px; /* Space between count and employee name */
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions > button {
+  margin-left: 8px; /* Spacing between buttons */
+}
+
+.ant-btn {
+  padding: 6px 12px; /* Padding for buttons */
+}

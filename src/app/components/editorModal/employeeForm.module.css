@@ -1,0 +1,52 @@
+.formContent {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .formSection {
+    flex: 1;
+  }
+  
+  .verticalLine {
+    border-left: 1px solid #d9d9d9;
+    margin: 0 16px;
+  }
+  
+  .formItem {
+    margin-bottom: 16px;
+  }
+  
+  .inlineContainer {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .inlineFormItem {
+    flex: 1;
+  }
+  
+  .inlineFormItemFullWidth {
+    width: 100%;
+  }
+  
+  .skillsSection {
+    margin-top: 24px;
+  }
+  
+  .skillFormItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+  }
+  
+  .skillFormItemInline {
+    flex: 1;
+  }
+  
+  .dynamicDeleteButton {
+    align-self: center;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  
