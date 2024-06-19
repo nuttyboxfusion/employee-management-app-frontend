@@ -17,7 +17,6 @@ const { Search } = Input;
 
 export default function Employee() {
   const [modalVisible, setModalVisible] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
 
@@ -31,17 +30,18 @@ export default function Employee() {
     removeSelectedEmployee,
   } = useEmployeeAction();
   const { employees, employee } = useEmployeeState();
+
   useEffect(() => {
     getAllEmployees();
   }, []);
 
   useEffect(() => {
     if (employee) {
+      debugger;
       setModalVisible(true);
-    } else {
-      setModalVisible(false);
     }
   }, [employee]);
+
   const handleSearch = async (value: string) => {
     try {
       searchEmployee(value);
@@ -51,6 +51,7 @@ export default function Employee() {
       message.error("Error searching employees");
     }
   };
+
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "") {
       getAllEmployees();
@@ -62,13 +63,13 @@ export default function Employee() {
     selectEmployee(employee);
   };
 
-  const handleFormSubmit = (values: IEmployee) => {
+  const handleFormSubmit = async (values: IEmployee) => {
     if (employee) {
-      updateEmployee({ ...employee, ...values });
-      removeSelectedEmployee();
+      await updateEmployee({ ...employee, ...values });
     } else {
-      createEmployee(values);
+      await createEmployee(values);
     }
+    removeSelectedEmployee();
     setModalVisible(false);
   };
 
@@ -122,7 +123,10 @@ export default function Employee() {
               type="primary"
               icon={<PlusOutlined />}
               style={{ marginLeft: "10px" }}
-              onClick={() => setModalVisible(true)}
+              onClick={() => {
+                removeSelectedEmployee();
+                setModalVisible(true);
+              }}
             >
               New Employee
             </Button>

@@ -66,7 +66,7 @@ const EmployeeProvider: React.FC<EmployeeProviderProps> = ({ children }) => {
         `${baseUrl}/api/Employees/${employee.id}`,
         employee
       );
-      dispatch(updateEmployeeAction());
+      dispatch(updateEmployeeAction(response.data));
       message.success("Employee successfully updated!");
     } catch (error) {
       message.error("Failed to update employee");
@@ -75,7 +75,6 @@ const EmployeeProvider: React.FC<EmployeeProviderProps> = ({ children }) => {
 
   const searchEmployee = async (searchTerm: string) => {
     try {
-      
       dispatch(searchEmployeeAction(searchTerm));
     } catch (error) {
       message.error("Failed to update employee");

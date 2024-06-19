@@ -68,6 +68,7 @@ export const employeeReducer = handleActions<IEmployeeContext, any>(
       if (action.payload) {
         return {
           ...state,
+          employee: undefined,
           employees: state.employees.map((employee) => {
             if (employee.id === action.payload.id) {
               return action.payload;

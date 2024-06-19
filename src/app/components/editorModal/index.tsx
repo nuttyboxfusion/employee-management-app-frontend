@@ -30,6 +30,13 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({
 }) => {
   const [form] = Form.useForm();
 
+  useEffect(() => {
+    form.setFieldsValue({
+      ...employee,
+      dateOfBirth: employee ? dayjs(employee.dateOfBirth) : null,
+    });
+  }, [employee]);
+
   const handleCancel = () => {
     form.resetFields();
     onCancel();
@@ -60,14 +67,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({
       ]}
       width={800}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        initialValues={{
-          ...employee,
-          dateOfBirth: employee ? dayjs(employee.dateOfBirth) : null,
-        }}
-      >
+      <Form form={form} layout="vertical">
         <div className={styles.formContent}>
           <div className={styles.formSection}>
             <Form.Item
@@ -223,6 +223,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({
                     </Form.Item>
                     <Form.Item
                       {...field}
+                      key={field.name}
                       name={[field.name, "yearsOfExperience"]}
                       label="Experience (years)"
                       className={styles.skillFormItemInline}
