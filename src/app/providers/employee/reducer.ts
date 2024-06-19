@@ -9,6 +9,7 @@ export const employeeReducer = handleActions<IEmployeeContext, any>(
         return {
           ...state,
           employees: action.payload,
+          loading: false,
         };
       }
       return state;
@@ -37,7 +38,10 @@ export const employeeReducer = handleActions<IEmployeeContext, any>(
       return state;
     },
     [ActionTypes.GET_ALL_EMPLOYEES_LOADING]: (state) => {
-      return state;
+      return {
+        ...state,
+        loading: !state.loading,
+      };
     },
     [ActionTypes.CREATE_EMPLOYEE]: (state, action) => {
       if (action.payload) {

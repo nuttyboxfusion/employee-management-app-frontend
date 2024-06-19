@@ -2,12 +2,19 @@
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import { IEmployee } from "@/app/models";
-import { Button, Empty, Input, Pagination, Typography, message } from "antd";
+import {
+  Button,
+  Empty,
+  Input,
+  Pagination,
+  Spin,
+  Typography,
+  message,
+} from "antd";
 import EmployeeCard from "@/app/components/EmployeeCard";
 import { PlusOutlined } from "@ant-design/icons";
 import EmployeeForm from "@/app/components/editorModal";
 import {
-  EmployeeProvider,
   useEmployeeAction,
   useEmployeeState,
 } from "@/app/providers/employee";
@@ -29,7 +36,7 @@ export default function Employee() {
     updateEmployee,
     removeSelectedEmployee,
   } = useEmployeeAction();
-  const { employees, employee } = useEmployeeState();
+  const { employees, employee, loading } = useEmployeeState();
 
   useEffect(() => {
     getAllEmployees();
@@ -37,7 +44,6 @@ export default function Employee() {
 
   useEffect(() => {
     if (employee) {
-      debugger;
       setModalVisible(true);
     }
   }, [employee]);
@@ -92,72 +98,77 @@ export default function Employee() {
   );
 
   return (
-    <EmployeeProvider>
-      <div className={styles.container}>
-        <EmployeeForm
-          visible={modalVisible}
-          employee={employee}
-          onSubmit={handleFormSubmit}
-          onCancel={handleCancel}
-        />
-        <div className={styles.header}>
-          <div className={styles.titleContainer}>
-            <Title level={2} className={styles.title}>
-              Employees
-            </Title>
-            <Text className={styles.subtitle}>
-              There are {employees.length} employees
-            </Text>
-          </div>
+    <>
+      {loading ? (
+        <Spin></Spin>
+      ) : (
+        <div className={styles.container}>
+          <EmployeeForm
+            visible={modalVisible}
+            employee={employee}
+            onSubmit={handleFormSubmit}
+            onCancel={handleCancel}
+          />
+          <div className={styles.header}>
+            <div className={styles.titleContainer}>
+              <Title level={2} className={styles.title}>
+                Employees
+              </Title>
+              <Text className={styles.subtitle}>
+                There are {employees.length} employees
+              </Text>
+            </div>
 
-          <div className={styles.searchFilterContainer}>
-            <Search
-              placeholder="Search by name or email"
-              onSearch={handleSearch}
-              className={styles.searchInput}
-              onChange={handleInputChange}
-              allowClear
-            />
-
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              style={{ marginLeft: "10px" }}
-              onClick={() => {
-                removeSelectedEmployee();
-                setModalVisible(true);
-              }}
-            >
-              New Employee
-            </Button>
-          </div>
-        </div>
-        <div className={styles.employeeList}>
-          {filteredEmployees.length > 0 ? (
-            filteredEmployees.map((employee) => (
-              <EmployeeCard
-                key={employee.id}
-                index={employees.indexOf(employee)}
-                employee={employee}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
+            <div className={styles.searchFilterContainer}>
+              <Search
+                placeholder="Search by name or email"
+                onSearch={handleSearch}
+                hidden={employees.length === 0}
+                className={styles.searchInput}
+                onChange={handleInputChange}
+                allowClear
               />
-            ))
-          ) : (
-            <Empty
-              image={Empty.PRESENTED_IMAGE_DEFAULT}
-              description="There are no employees"
-            />
-          )}
+
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                style={{ marginLeft: "10px" }}
+                onClick={() => {
+                  removeSelectedEmployee();
+                  setModalVisible(true);
+                }}
+              >
+                New Employee
+              </Button>
+            </div>
+          </div>
+          <div className={styles.employeeList}>
+            {filteredEmployees.length > 0 ? (
+              filteredEmployees.map((employee) => (
+                <EmployeeCard
+                  key={employee.id}
+                  index={employees.indexOf(employee)}
+                  employee={employee}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              ))
+            ) : (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_DEFAULT}
+                description="There are no employees"
+              />
+            )}
+          </div>
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={employees.length}
+            onChange={handlePageChange}
+            style={{ textAlign: "center", marginTop: "20px" }}
+          />
         </div>
-        <Pagination
-          current={currentPage}
-          pageSize={pageSize}
-          total={employees.length}
-          onChange={handlePageChange}
-          style={{ textAlign: "center", marginTop: "20px" }}
-        />
-      </div>
-    </EmployeeProvider>
+      )}
+    </>
   );
 }

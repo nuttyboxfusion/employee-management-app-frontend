@@ -22,6 +22,7 @@
 .employeeDetail {
   flex: 1; /* Distribute space evenly */
   margin-right: 16px; /* Space between each detail block */
+  font-weight: 400;
 }
 
 .employeeDetails p {

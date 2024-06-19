@@ -12,6 +12,7 @@ import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import { IEmployee } from "@/app/models";
 import dayjs from "dayjs";
 import styles from "./EmployeeForm.module.css";
+import { SeniorityLevel } from "@/app/providers/employee/interface";
 
 interface EmployeeFormProps {
   visible: boolean;
@@ -98,6 +99,10 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({
                 {
                   pattern: /^\d+$/,
                   message: "Phone number must be digits only",
+                },
+                {
+                  len: 10,
+                  message: "Phone number must be  10 digits",
                 },
               ]}
             >
@@ -254,9 +259,10 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({
                       ]}
                     >
                       <Select placeholder="Select seniority level">
-                        <Option value={1}>Junior</Option>
-                        <Option value={2}>Intermediate</Option>
-                        <Option value={3}>Senior</Option>
+                        <Option value={SeniorityLevel.Junior}>Junior</Option>
+                        <Option value={SeniorityLevel.Mid}>Intermediate</Option>
+                        <Option value={SeniorityLevel.Senior}>Senior</Option>
+                        <Option value={SeniorityLevel.Lead}>Senior</Option>
                       </Select>
                     </Form.Item>
                     {fields.length > 1 && (

@@ -23,3 +23,12 @@ export interface ViewEmployee {
 export interface EmployeeProviderProps {
   children: React.ReactNode;
 }
+//create enums for seniority level
+export enum SeniorityLevel {
+  Graduate = 1,
+  Junior = 2,
+  Mid = 3,
+  Senior = 4,
+  Lead = 5,
+  
+}

@@ -22,9 +22,12 @@ import {
 } from "./action";
 import { EmployeeProviderProps } from "./interface";
 import { IEmployee } from "@/app/models";
-const baseUrl = "https://localhost:7049";
+debugger;
+const baseUrl =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://localhost:7049";
 
 export const getEmployees = async () => {
+  console.log("baseUrl", baseUrl);
   const response = await axios.get(`${baseUrl}/api/Employees`);
   return response.data;
 };
@@ -34,12 +37,13 @@ const EmployeeProvider: React.FC<EmployeeProviderProps> = ({ children }) => {
 
   const getAllEmployees = async () => {
     try {
+      dispatch(getAllEmployeesLoadingAction());
       const response = await axios.get(`${baseUrl}/api/Employees`);
       dispatch(getAllEmployeesAction(response.data));
     } catch (error) {
       dispatch(getAllEmployeesFailedAction());
       message.error("Failed to fetch employees");
-    }
+    } 
   };
 
   const createEmployee = async (employee: IEmployee) => {
