@@ -74,6 +74,7 @@ export default function Employee() {
 
   const handleCancel = () => {
     removeSelectedEmployee();
+    setModalVisible(false);
   };
 
   const handleDelete = (id: string) => {
